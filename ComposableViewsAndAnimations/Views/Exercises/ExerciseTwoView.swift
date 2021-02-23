@@ -19,7 +19,10 @@ struct ExerciseTwoView: View {
     @State private var typeFace: String = "Helvetica-Neue"
 
     // Whether to apply the animation
-    @State private var useAnimation = false
+    @State private var useAnimation = true
+    
+    // Controls color of text
+    @State private var hue: Color = .red
 
     // MARK: Computed properties
 
@@ -41,8 +44,15 @@ struct ExerciseTwoView: View {
             VStack {
                 
                 Text(typeFace)
+                    .foregroundColor(hue)
                     .font(.custom(typeFace, size: 30.0))
-                
+                    .onTapGesture {
+                        withAnimation(.default) {
+                                hue = Color(hue: Double.random(in: 1...360) / 360.0,
+                                            saturation: 0.8,
+                                            brightness: 0.8)
+                        }
+                    }
             }
             .navigationTitle("Exercise 2")
             .toolbar {
