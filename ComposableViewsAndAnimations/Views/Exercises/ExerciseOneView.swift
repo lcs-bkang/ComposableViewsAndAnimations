@@ -23,6 +23,9 @@ struct ExerciseOneView: View {
     
     // Controls the hue of the text
     @State private var hue: Color = .red
+    
+    // Controls the font size
+    @State private var fontSize: Double = 25.0
 
     // MARK: Computed properties
     
@@ -43,16 +46,18 @@ struct ExerciseOneView: View {
             
             VStack {
                 Text(typeFace)
-                    .font(.custom(typeFace, size: 30.0))
+                    .foregroundColor(hue)
+                    .font(.custom(typeFace, size: CGFloat(fontSize)))
+                    .border(Color.blue, width: 1.0)
                     .onTapGesture {
                         hue = Color(hue: Double.random(in: 1...360) / 360.0,
                                     saturation: 0.8,
                                     brightness: 0.8)
-                            
+                        fontSize = Double.random(in: 15...45)
                     }
-
+                    .animation(useAnimation ? .interpolatingSpring(mass: 1.0, stiffness: 1.0, damping: 0.75, initialVelocity: 10) : .none)
             }
-            .animation(useAnimation ? .interpolatingSpring(mass: 1.0, stiffness: 1.0, damping: 0.75, initialVelocity: 10) : .none)
+
         }
         .navigationTitle("Exercise 1")
         .toolbar {
